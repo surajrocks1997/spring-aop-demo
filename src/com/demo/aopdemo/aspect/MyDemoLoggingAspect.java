@@ -1,10 +1,14 @@
 package com.demo.aopdemo.aspect;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import com.demo.aopdemo.Account;
 
 @Aspect
 @Component
@@ -41,24 +45,49 @@ public class MyDemoLoggingAspect {
 //	public void beforeAddAnyReturnAnyParameter() {
 //		System.out.println("=======>>> Executing @Before Advice on ANY addAccount() on any RETURN TYPE with ANY Parameter");
 //	}
-	
+
 	@Pointcut("execution(public * com.demo.aopdemo.dao.*.*(..))")
-	private void forDaoPackage() {}
-	
+	private void forDaoPackage() {
+	}
+
 	@Pointcut("execution(public * com.demo.aopdemo.dao.*.get*(..))")
-	private void getter() {}
-	
+	private void getter() {
+	}
+
 	@Pointcut("execution(public * com.demo.aopdemo.dao.*.set*(..))")
-	private void setter() {}
-	
+	private void setter() {
+	}
+
 //	point cut declaration reuse from above
 	@Before("forDaoPackage()")
 	public void beforeAddAnyReturnAnyClassAnyParameterWithinPackage() {
-		System.out.println("=======>>> Executing @Before Advice on ANY addAccount() on a any package with any class, any method and any parameter");
+		System.out.println(
+				"=======>>> Executing @Before Advice on ANY addAccount() on a any package with any class, any method and any parameter");
 	}
-	
+
 	@Before("forDaoPackage() && !(getter() || setter())")
 	public void forDaoExcludingGetandSet() {
 		System.out.println("=======>>> Executing @Before Advice on forDaoExcludingGetandSet");
+	}
+
+//	Join points
+	@Before("execution(public * add*(..))")
+	public void beforeAddAccountAdvice(JoinPoint theJoinPoint) {
+		System.out.println("=======>>> Executing @Before Advice for Add Account method");
+
+//		display method signature
+		MethodSignature methodSignature = (MethodSignature) theJoinPoint.getSignature();
+		System.out.println("method signature: " + methodSignature);
+
+//		display method arguments
+		Object[] args = theJoinPoint.getArgs();
+		for (Object tempArg : args) {
+			System.out.println(tempArg);
+			if (tempArg instanceof Account) {
+				Account theAccount = (Account) tempArg;
+				System.out.println("AccountName: " + theAccount.getName());
+				System.out.println("AccountLevel: " + theAccount.getLevel());
+			}
+		}
 	}
 }

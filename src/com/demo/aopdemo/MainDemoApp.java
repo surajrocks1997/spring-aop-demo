@@ -14,7 +14,10 @@ public class MainDemoApp {
 //		theAccountDao.addAccount();
 
 //		theAccountDao.addAccount(new Account());
-		theAccountDao.addAccount(new Account(), true);
+		Account theAccount = new Account();
+		theAccount.setName("DemoName");
+		theAccount.setLevel("Level-1");
+		theAccountDao.addAccount(theAccount, true);
 		theAccountDao.setAccount();
 		
 		MembershipDao membershipDao = context.getBean("membershipDao", MembershipDao.class);
