@@ -20,8 +20,8 @@ public class MainDemoApp {
 		theAccountDao.addAccount(theAccount, true);
 		theAccountDao.setAccount();
 		
-		MembershipDao membershipDao = context.getBean("membershipDao", MembershipDao.class);
-		membershipDao.addAccount();
+//		MembershipDao membershipDao = context.getBean("membershipDao", MembershipDao.class);
+//		membershipDao.addAccount();
 		
 
 		context.close();

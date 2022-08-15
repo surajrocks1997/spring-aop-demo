@@ -1,6 +1,9 @@
 package com.demo.aopdemo.aspect;
 
+import java.util.List;
+
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -59,16 +62,16 @@ public class MyDemoLoggingAspect {
 	}
 
 //	point cut declaration reuse from above
-	@Before("forDaoPackage()")
-	public void beforeAddAnyReturnAnyClassAnyParameterWithinPackage() {
-		System.out.println(
-				"=======>>> Executing @Before Advice on ANY addAccount() on a any package with any class, any method and any parameter");
-	}
-
-	@Before("forDaoPackage() && !(getter() || setter())")
-	public void forDaoExcludingGetandSet() {
-		System.out.println("=======>>> Executing @Before Advice on forDaoExcludingGetandSet");
-	}
+//	@Before("forDaoPackage()")
+//	public void beforeAddAnyReturnAnyClassAnyParameterWithinPackage() {
+//		System.out.println(
+//				"=======>>> Executing @Before Advice on ANY addAccount() on a any package with any class, any method and any parameter");
+//	}
+//
+//	@Before("forDaoPackage() && !(getter() || setter())")
+//	public void forDaoExcludingGetandSet() {
+//		System.out.println("=======>>> Executing @Before Advice on forDaoExcludingGetandSet");
+//	}
 
 //	Join points
 	@Before("execution(public * add*(..))")
@@ -89,5 +92,17 @@ public class MyDemoLoggingAspect {
 				System.out.println("AccountLevel: " + theAccount.getLevel());
 			}
 		}
+	}
+
+//	adding new advice for AfterReturning on the findAccount method
+	@AfterReturning(pointcut = "execution(public * com.demo.aopdemo.dao.AccountDao.findAccounts(..))", returning = "result")
+	public void afterReturningFindAccountsAdvice(JoinPoint joinPoint, List<Account> result) {
+		String method = joinPoint.getSignature().toShortString();
+		System.out.println("=======>>> Executing @AfterReturning Advice on method: " + method);
+		
+		System.out.println("=======>>> result is: " + result);
+
+		
+		
 	}
 }
