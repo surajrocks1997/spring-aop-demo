@@ -99,10 +99,22 @@ public class MyDemoLoggingAspect {
 	public void afterReturningFindAccountsAdvice(JoinPoint joinPoint, List<Account> result) {
 		String method = joinPoint.getSignature().toShortString();
 		System.out.println("=======>>> Executing @AfterReturning Advice on method: " + method);
-		
+
 		System.out.println("=======>>> result is: " + result);
 
-		
-		
+//		post process/modify the data before it is sent to program
+//		converting the account name to upper case.
+		convertAccountNamesToUpperCase(result);
+
+		System.out.println("=======>>> result is: " + result);
+
+	}
+
+	private void convertAccountNamesToUpperCase(List<Account> result) {
+
+		for (Account account : result) {
+			String theUpperName = account.getName().toUpperCase();
+			account.setName(theUpperName);
+		}
 	}
 }
