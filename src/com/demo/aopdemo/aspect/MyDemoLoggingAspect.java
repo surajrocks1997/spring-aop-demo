@@ -42,9 +42,20 @@ public class MyDemoLoggingAspect {
 	@Pointcut("execution(public * com.demo.aopdemo.dao.*.*(..))")
 	private void forDaoPackage() {}
 	
+	@Pointcut("execution(public * com.demo.aopdemo.dao.*.get*(..))")
+	private void getter() {}
+	
+	@Pointcut("execution(public * com.demo.aopdemo.dao.*.set*(..))")
+	private void setter() {}
+	
 //	point cut declaration reuse from above
 	@Before("forDaoPackage()")
 	public void beforeAddAnyReturnAnyClassAnyParameterWithinPackage() {
 		System.out.println("=======>>> Executing @Before Advice on ANY addAccount() on a any package with any class, any method and any parameter");
+	}
+	
+	@Before("forDaoPackage() && !(getter() || setter())")
+	public void forDaoExcludingGetandSet() {
+		System.out.println("=======>>> Executing @Before Advice on forDaoExcludingGetandSet");
 	}
 }

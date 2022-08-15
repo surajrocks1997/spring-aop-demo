@@ -18,4 +18,8 @@ public class AccountDao {
 	public void addAccount(Account account, boolean vipFlag) {
 		System.out.println(getClass() + ": Adding Account with Account and Bool Parameter");
 	}
+	
+	public void setAccount() {
+		System.out.println(getClass() + ": Setting Account");
+	}
 }
