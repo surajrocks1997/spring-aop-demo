@@ -22,4 +22,24 @@ public class MyDemoLoggingAspect {
 	public void beforeAddAnyReturn() {
 		System.out.println("=======>>> Executing @Before Advice on ANY addAccount() on any RETURN TYPE");
 	}
+	
+	@Before("execution(public * add*(com.demo.aopdemo.Account))")
+	public void beforeAddAnyReturnWithParameter() {
+		System.out.println("=======>>> Executing @Before Advice on ANY addAccount() on any RETURN TYPE with Account Parameter");
+	}
+	
+	@Before("execution(public * add*(com.demo.aopdemo.Account, ..))")
+	public void beforeAddAnyReturnWithMultipleParameter() {
+		System.out.println("=======>>> Executing @Before Advice on ANY addAccount() on any RETURN TYPE with Account Parameter and Boolean Parameter");
+	}
+	
+	@Before("execution(public * add*(..))")
+	public void beforeAddAnyReturnAnyParameter() {
+		System.out.println("=======>>> Executing @Before Advice on ANY addAccount() on any RETURN TYPE with ANY Parameter");
+	}
+	
+	@Before("execution(public * com.demo.aopdemo.dao.*.*(..))")
+	public void beforeAddAnyReturnAnyClassAnyParameterWithinPackage() {
+		System.out.println("=======>>> Executing @Before Advice on ANY addAccount() on a any package with any class, any method and any parameter");
+	}
 }
