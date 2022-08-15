@@ -35,4 +35,17 @@ public class AccountDao {
 		accounts.add(temp2);
 		return accounts;
 	}
+
+	public List<Account> findAccounts(boolean tripWire) {
+		if (tripWire) {
+			throw new RuntimeException("Manual Exception Raised");
+		}
+		List<Account> accounts = new ArrayList<>();
+		Account temp1 = new Account("Luca", "Gold");
+		Account temp2 = new Account("Mark", "Platinum");
+
+		accounts.add(temp1);
+		accounts.add(temp2);
+		return accounts;
+	}
 }

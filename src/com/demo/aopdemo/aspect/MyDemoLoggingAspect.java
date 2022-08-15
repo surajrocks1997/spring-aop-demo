@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -116,5 +117,14 @@ public class MyDemoLoggingAspect {
 			String theUpperName = account.getName().toUpperCase();
 			account.setName(theUpperName);
 		}
+	}
+
+	@AfterThrowing(pointcut = "execution(public * com.demo.aopdemo.dao.AccountDao.findAccounts(..))", throwing = "theException")
+	public void afterThrowingFindAccountAdvice(JoinPoint theJoinPoint, Throwable theException) {
+
+		String method = theJoinPoint.getSignature().toShortString();
+		System.out.println("=======>>> Executing @AfterThrowing Advice on method: " + method);
+		
+		System.out.println("=======>>> Exception is: " + theException);
 	}
 }
