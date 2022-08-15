@@ -3,10 +3,13 @@ package com.demo.aopdemo.aspect;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+@Order(1)
+//order can have any number from negative to positive. priority start from most negative to most positive
 public class MyDemoLoggingAspect {
 
 //	@Before("execution(public void com.demo.aopdemo.dao.AccountDao.addAccount())")
