@@ -156,7 +156,8 @@ public class MyDemoLoggingAspect {
 		} catch (Throwable e) {
 			myLogger.warning(e.getMessage());
 			
-			result = "Major Accident! AOP is handling issue";
+//			result = "Major Accident! AOP is handling issue";
+			throw e;
 		}
 
 		long end = System.currentTimeMillis();
