@@ -149,7 +149,15 @@ public class MyDemoLoggingAspect {
 
 		long begin = System.currentTimeMillis();
 
-		Object result = theProceedingJoinPoint.proceed();
+		Object result = null;
+
+		try {
+			result = theProceedingJoinPoint.proceed();
+		} catch (Throwable e) {
+			myLogger.warning(e.getMessage());
+			
+			result = "Major Accident! AOP is handling issue";
+		}
 
 		long end = System.currentTimeMillis();
 
@@ -158,4 +166,5 @@ public class MyDemoLoggingAspect {
 
 		return result;
 	}
+
 }
