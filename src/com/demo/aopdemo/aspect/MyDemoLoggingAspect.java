@@ -1,6 +1,7 @@
 package com.demo.aopdemo.aspect;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -22,6 +23,8 @@ import com.demo.aopdemo.Account;
 @Order(1)
 //order can have any number from negative to positive. priority start from most negative to most positive
 public class MyDemoLoggingAspect {
+
+	private Logger myLogger = Logger.getLogger(getClass().getName());
 
 //	@Before("execution(public void com.demo.aopdemo.dao.AccountDao.addAccount())")
 //	public void beforeAddAccountAdvice() {
@@ -142,7 +145,7 @@ public class MyDemoLoggingAspect {
 	public Object aroundGetFortune(ProceedingJoinPoint theProceedingJoinPoint) throws Throwable {
 
 		String method = theProceedingJoinPoint.getSignature().toShortString();
-		System.out.println("=======>>> Executing @After (finally) Advice on method: " + method);
+		myLogger.info("=======>>> Executing @After (finally) Advice on method: " + method);
 
 		long begin = System.currentTimeMillis();
 
@@ -151,7 +154,7 @@ public class MyDemoLoggingAspect {
 		long end = System.currentTimeMillis();
 
 		long duration = end - begin;
-		System.out.println("========>>> Duration " + duration/1000.0 + " seconds");
+		myLogger.info("========>>> Duration " + duration / 1000.0 + " seconds");
 
 		return result;
 	}
