@@ -3,6 +3,7 @@ package com.demo.aopdemo.aspect;
 import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
@@ -126,5 +127,15 @@ public class MyDemoLoggingAspect {
 		System.out.println("=======>>> Executing @AfterThrowing Advice on method: " + method);
 		
 		System.out.println("=======>>> Exception is: " + theException);
+	}
+	
+	
+	@After("execution(public * com.demo.aopdemo.dao.AccountDao.findAccounts(..))")
+	public void afterFinallyFindAccountAdvice(JoinPoint joinPoint) {
+		
+		String method = joinPoint.getSignature().toShortString();
+		System.out.println("=======>>> Executing @After (finally) Advice on method: " + method);
+		
+		
 	}
 }
