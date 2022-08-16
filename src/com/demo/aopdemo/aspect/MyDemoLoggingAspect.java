@@ -3,9 +3,11 @@ package com.demo.aopdemo.aspect;
 import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -125,17 +127,32 @@ public class MyDemoLoggingAspect {
 
 		String method = theJoinPoint.getSignature().toShortString();
 		System.out.println("=======>>> Executing @AfterThrowing Advice on method: " + method);
-		
+
 		System.out.println("=======>>> Exception is: " + theException);
 	}
-	
-	
+
 	@After("execution(public * com.demo.aopdemo.dao.AccountDao.findAccounts(..))")
 	public void afterFinallyFindAccountAdvice(JoinPoint joinPoint) {
-		
+
 		String method = joinPoint.getSignature().toShortString();
 		System.out.println("=======>>> Executing @After (finally) Advice on method: " + method);
-		
-		
+	}
+
+	@Around("execution(public * com.demo.aopdemo.service.*.getFortune(..))")
+	public Object aroundGetFortune(ProceedingJoinPoint theProceedingJoinPoint) throws Throwable {
+
+		String method = theProceedingJoinPoint.getSignature().toShortString();
+		System.out.println("=======>>> Executing @After (finally) Advice on method: " + method);
+
+		long begin = System.currentTimeMillis();
+
+		Object result = theProceedingJoinPoint.proceed();
+
+		long end = System.currentTimeMillis();
+
+		long duration = end - begin;
+		System.out.println("========>>> Duration " + duration/1000.0 + " seconds");
+
+		return result;
 	}
 }
